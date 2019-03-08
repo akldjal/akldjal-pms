@@ -3,21 +3,17 @@
     <div class="window">
       <div class="title">后台人员管理系统</div>
       <div class="form">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
+        <el-form :label-position="right" :model="ruleForm" :rules="rules" ref="ruleForm" class="demo-ruleForm">
           <el-form-item label="手机号" prop="phonenumber">
             <el-input
               type="phonenumber"
               v-model.number="ruleForm.phonenumber"
-              aria-placeholder="请输入手机号"
-              autocomplete="off"
             ></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="password">
             <el-input
               type="password"
               v-model="ruleForm.password"
-              aria-placeholder="请输入密码"
-              autocomplete="off"
             ></el-input>
           </el-form-item>
           <el-form-item class="submit-button-content">

@@ -3,27 +3,21 @@ export default {
 
   },
   data() {
-    var phonenumberCheck = (rule, value, callback) => {
+    var phoneCheck = ( rule, value, callback ) => {
       if (!value) {
-        return callback(new Error('手机号不为空'));
-      }
-      setTimeout(() => {
-        if (!Number.isInteger(value)) {
-          callback(new Error('手机号只能为数字'));
-        } else if (value) {
-          callback(new Error('手机号应为11位数字'));
-        } else {
-          callback();
-        }
-      })
-    };
-    var passwordCheck = (rule, value, callback) => {
-      if (!value) {
-        return callback(new Error('密码不为空'));
+        return callback(new Error('手机号不应为空'));
+      } else if (!Number.isInteger(value)) {
+        return callback(new Error('手机号应为纯数字'));
       } else {
-        callback();
+        const reg = /^1([38][0-9]|4[579]|5[0-3,5-9]|6[6]|7[0135678]|9[89])\d{8}$/
+        console.log(reg.test(value));
+        if (reg.test(value)) {
+          callback();
+        } else {
+          return callback(new Error('手机号错误'));
+        }
       }
-    }
+    };
     return {
       ruleForm: {
         phonenumber: '',
@@ -31,16 +25,25 @@ export default {
       },
       rules: {
         phonenumber: [{
-          validator: phonenumberCheck,
+          validator: phoneCheck,
           trigger: 'blur'
         }, ],
         password: [{
-          validator: passwordCheck,
+          required: true,
+          message: '密码不能为空',
           trigger: 'blur'
         }, ],
       }
     };
   },
   methods: {
+    submitForm(formName) {
+      this.$router.push('/information');
+      // this.$refs[formName].validate(valid) => {
+      //   if (valid) {
+      //     localStorage.setItem('')
+      //   }
+      // }
+    }
   }
 };

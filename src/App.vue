@@ -10,6 +10,6 @@
   </div>
 </template>
 
-<script></script>
+<script src="@/js/app.js"></script>
 
-<style></style>
+<style src="@/styles/app.less"></style>
