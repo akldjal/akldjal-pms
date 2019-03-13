@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/pages/Login'
-import Edit from '@/pages/Edit'
-import Increase from '@/pages/Increase'
 import Information from '@/pages/Information'
 import List from '@/pages/List'
 
@@ -14,16 +12,6 @@ export default new Router({
       path: '/',
       name: 'Login',
       component: Login
-    },
-    {
-      path: '/edit',
-      name: 'Edit',
-      component: Edit
-    },
-    {
-      path: '/increase',
-      name: 'Increase',
-      component: Increase
     },
     {
       path: '/information',

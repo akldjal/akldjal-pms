@@ -1,9 +1,9 @@
-export default {
-  components: {
+import axios from 'axios';
+// import md5 from 'blueimp-md5';
 
-  },
+export default {
   data() {
-    var phoneCheck = ( rule, value, callback ) => {
+    var phoneCheck = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('手机号不应为空'));
       } else if (!Number.isInteger(value)) {
@@ -18,32 +18,54 @@ export default {
         }
       }
     };
+    var passCheck = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('密码不应为空'));
+      } else {
+        callback();
+      }
+    };
     return {
-      ruleForm: {
-        phonenumber: '',
+      user: {
+        tel: '',
         password: '',
       },
       rules: {
-        phonenumber: [{
+        tel: [{
           validator: phoneCheck,
           trigger: 'blur'
         }, ],
         password: [{
-          required: true,
-          message: '密码不能为空',
+          validator: passCheck,
           trigger: 'blur'
         }, ],
       }
     };
   },
   methods: {
-    submitForm(formName) {
-      this.$router.push('/information');
-      // this.$refs[formName].validate(valid) => {
-      //   if (valid) {
-      //     localStorage.setItem('')
-      //   }
-      // }
-    }
+    login() {
+      let self = this;
+      if (self.user.tel == '' || self.user.password == '') {
+        self.$message('账号密码不能为空');
+      } else {
+        axios.get('http://192.168.5.11:8686/pms/login', {
+            params: {
+              tel: self.user.tel,
+              password: self.user.password
+            }
+          })
+          .then(function (res) {
+            // console.log(res);
+            self.$router.push('/information');
+            var consumer = res.data.response;
+            consumer = JSON.stringify(consumer);
+            localStorage.setItem('info', consumer);
+            //res.data.response: id, role, tel, name, sex, state, age
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    },
   }
 };
